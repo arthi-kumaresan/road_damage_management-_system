@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Full-stack MERN Road Damage Reporting and Maintenance Tracking System",
   "scripts": {
-    "build": "npm install --prefix client && npm run build --prefix client && npm install --prefix server",
+    "build": "npm install --prefix client --include=dev && npm run build --prefix client && npm install --prefix server",
     "start": "npm start --prefix server",
     "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
