@@ -184,15 +184,12 @@ const ComplaintDetails = () => {
                 BEFORE REPAIR (Citizen / Initial Inspection)
               </span>
               <img
-                src={
-                  complaint.beforeRepairImage
-                    ? complaint.beforeRepairImage.startsWith('http')
-                      ? complaint.beforeRepairImage
-                      : `http://localhost:5000${complaint.beforeRepairImage}`
-                    : complaint.images[0]?.startsWith('http')
-                    ? complaint.images[0]
-                    : `http://localhost:5000${complaint.images[0]}`
-                }
+                src={(() => {
+                  const srv = import.meta.env.VITE_SERVER_URL || (import.meta.env.PROD ? '' : 'http://localhost:5000');
+                  const target = complaint.beforeRepairImage || complaint.images[0];
+                  if (!target) return '';
+                  return target.startsWith('http') ? target : `${srv}${target}`;
+                })()}
                 alt="Before repair"
                 className="w-full h-56 object-cover rounded-lg border border-gray-200"
               />
@@ -204,11 +201,12 @@ const ComplaintDetails = () => {
               </span>
               {complaint.afterRepairImage ? (
                 <img
-                  src={
-                    complaint.afterRepairImage.startsWith('http')
+                  src={(() => {
+                    const srv = import.meta.env.VITE_SERVER_URL || (import.meta.env.PROD ? '' : 'http://localhost:5000');
+                    return complaint.afterRepairImage.startsWith('http')
                       ? complaint.afterRepairImage
-                      : `http://localhost:5000${complaint.afterRepairImage}`
-                  }
+                      : `${srv}${complaint.afterRepairImage}`;
+                  })()}
                   alt="After repair"
                   className="w-full h-56 object-cover rounded-lg border border-gray-200"
                 />

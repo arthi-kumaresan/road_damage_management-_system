@@ -43,10 +43,18 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/ai', aiRoutes);
 
-// Root route
-app.get('/', (req, res) => {
-  res.send('Road Damage Reporting and Maintenance Tracking API is running...');
-});
+// Serve static frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+  });
+} else {
+  // Root route for development
+  app.get('/', (req, res) => {
+    res.send('Road Damage Reporting and Maintenance Tracking API is running...');
+  });
+}
 
 // Custom Error Handling Middleware
 app.use(errorHandler);

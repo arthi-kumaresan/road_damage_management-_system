@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const baseURL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL,
 });
 
 // Attach JWT token to requests if present in localStorage
